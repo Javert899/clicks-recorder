@@ -35,6 +35,19 @@ def mouseup(event):
     
     return True
 
+def get_log_path():
+    username = ""
+    try:
+        username = str(os.getenv('username'))
+    except:
+        pass
+    computername = ""
+    try:
+        computername = str(os.environ['COMPUTERNAME'])
+    except:
+        pass
+    return "clicks_"+username+"_"+computername+".csv"
+
 def onclick(event):
     window_name = str(event.WindowName)
     window = event.Window
@@ -49,18 +62,29 @@ def onclick(event):
     
     window_position = str(window_position)
     event_position = str(event_position)
-    
-    F = open("clicks.csv", "a")
-    F.write("%s;%s;%s;%s;%s;%s;%s;%s\n" % (pid, window_id, window_name, window_position, window_dimension, event_position, event_position_rel, Shared.last_screenshot))
+    username = ""
+    try:
+        username = str(os.getenv('username'))
+    except:
+        pass
+    computername = ""
+    try:
+        computername = str(os.environ['COMPUTERNAME'])
+    except:
+        pass
+    current_timestamp = str(time.time())
+    F = open(get_log_path(), "a")
+    F.write("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s\n" % (pid, window_id, window_name, window_position, window_dimension, event_position, event_position_rel, username, computername, current_timestamp, Shared.last_screenshot))
     F.close()
     
     return True
 
 if not os.path.exists(Shared.screenshot_directory):
     os.mkdir(Shared.screenshot_directory)
-if not os.path.exists("clicks.csv"):
-    F = open("clicks.csv","w")
-    F.write("pid;window_id;window_name;window_position;window_dimension;event_position;event_position_rel;last_screenshot\n")
+log_path = get_log_path()
+if not os.path.exists(log_path):
+    F = open(log_path,"w")
+    F.write("pid;window_id;window_name;window_position;window_dimension;event_position;event_position_rel;username;computername;current_timestamp;last_screenshot\n")
     F.close()
 hm = pyHook.HookManager()
 hm.SubscribeMouseAllButtonsUp(mouseup)
