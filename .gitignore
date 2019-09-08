@@ -102,3 +102,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+clicks.csv
+screenshots
+screenshots/*
