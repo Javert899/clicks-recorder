@@ -51,7 +51,7 @@ def onclick(event):
     event_position = str(event_position)
     
     F = open("clicks.csv", "a")
-    F.write("%s,%s,%s,%s,%s,%s,%s,%s\n" % (pid, window_id, window_name, window_position, window_dimension, event_position, event_position_rel, Shared.last_screenshot))
+    F.write("%s;%s;%s;%s;%s;%s;%s;%s\n" % (pid, window_id, window_name, window_position, window_dimension, event_position, event_position_rel, Shared.last_screenshot))
     F.close()
     
     return True
@@ -60,7 +60,7 @@ if not os.path.exists(Shared.screenshot_directory):
     os.mkdir(Shared.screenshot_directory)
 if not os.path.exists("clicks.csv"):
     F = open("clicks.csv","w")
-    F.write("pid,window_id,window_name,window_position,window_dimension,event_position,event_position_rel,last_screenshot\n")
+    F.write("pid;window_id;window_name;window_position;window_dimension;event_position;event_position_rel;last_screenshot\n")
     F.close()
 hm = pyHook.HookManager()
 hm.SubscribeMouseAllButtonsUp(mouseup)
