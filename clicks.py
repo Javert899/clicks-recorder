@@ -54,6 +54,7 @@ def onclick(event):
     window = event.Window
     window_id = str(window)
     window_position_dim = win32gui.GetWindowRect(event.Window)
+    classname = str(win32gui.GetClassName(event.Window))
     window_position = (window_position_dim[0], window_position_dim[1])
     window_dimension = str((window_position_dim[2], window_position_dim[3]))
     _, pid = win32process.GetWindowThreadProcessId(window)
@@ -78,7 +79,7 @@ def onclick(event):
         pass
     current_timestamp = str(time.time())
     F = open(get_log_path(), "a")
-    F.write("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s\n" % (pid, process_name, process_exe, window_id, window_name, window_position, window_dimension, event_position, event_position_rel, username, computername, current_timestamp, Shared.last_screenshot))
+    F.write("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s\n" % (pid, process_name, process_exe, classname, window_id, window_name, window_position, window_dimension, event_position, event_position_rel, username, computername, current_timestamp, Shared.last_screenshot))
     F.close()
     
     return True
@@ -88,7 +89,7 @@ if not os.path.exists(Shared.screenshot_directory):
 log_path = get_log_path()
 if not os.path.exists(log_path):
     F = open(log_path,"w")
-    F.write("pid;process_name;process_exe;window_id;window_name;window_position;window_dimension;event_position;event_position_rel;username;computername;current_timestamp;last_screenshot\n")
+    F.write("pid;process_name;process_exe;classname;window_id;window_name;window_position;window_dimension;event_position;event_position_rel;username;computername;current_timestamp;last_screenshot\n")
     F.close()
 hm = pyHook.HookManager()
 hm.SubscribeMouseAllButtonsUp(mouseup)
