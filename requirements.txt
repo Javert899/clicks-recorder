@@ -1,0 +1,4 @@
+pyHook
+pypiwin32
+Pillow
+psutil

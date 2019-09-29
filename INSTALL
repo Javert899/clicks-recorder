@@ -1,0 +1,9 @@
+!!! the provided Python package is only compatible with Python 2.7 !!!
+
+For installing:
+
+Install Pywin32 from:
+https://github.com/mhammond/pywin32/releases
+
+And the requirements specified in the requirements.txt file by
+pip install -U -r requirements.txt
